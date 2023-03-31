@@ -1,18 +1,47 @@
 import com.sun.org.apache.xpath.internal.objects.XString;
 
 import javax.lang.model.type.NullType;
+import javax.swing.*;
 import java.util.Iterator;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        //Code dau vao
         Scanner in = new Scanner(System.in);
         DanhSach danhSachNhanVien = new DanhSach();
         DanhSach danhSachTruongPhong = new DanhSach();
         DanhSach danhSachGiamDoc = new DanhSach();
 
-        nhapThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc, in);
-        phanBoNhanVien(in, danhSachNhanVien, danhSachTruongPhong);
+        //Code xu ly
+        boolean check = true;
+        menu();
+        while (check) {
+            System.out.println("Vui long chon: ");
+            int nhap = Integer.parseInt(in.nextLine());
+            switch (nhap) {
+                case 0:
+                    check = false;
+                    break;
+                case 1:
+                    nhapThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc, in);
+                    break;
+                case 2:
+                    phanBoNhanVien(in, danhSachNhanVien, danhSachTruongPhong);
+                    break;
+                case 3:
+                    themNhanVien(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc, in);
+                    break;
+                case 4:
+                    xoaNhanVien(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc, in);
+                    break;
+                case 5:
+                    xuatThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+                    break;
+                default:
+                    System.out.println("Vui long chon dung!");
+            }
+        }
     }
 
     public static void menu() {
@@ -30,8 +59,6 @@ public class Main {
         System.out.println("11. Giam doc co luong co phan cao nhat.");
         System.out.println("12. Tinh va xuat tong thu nhap cua tung Giam doc.");
         System.out.println("===============================================MENU================================================");
-        System.out.println("Vui long chon: ");
-
     }
 
     public static void nhapThongTin(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc, Scanner in) {
@@ -117,7 +144,7 @@ public class Main {
         int count = 0;
         switch (nhap) {
             case 1:
-                count =0;
+                count = 0;
                 System.out.println("Danh sach nhan vien: ");
                 for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
                     System.out.println(count + ". " + nv.getHoTen());
@@ -126,13 +153,18 @@ public class Main {
                 System.out.println("Nhap index cua nhan vien muon xoa: ");
                 int index = Integer.parseInt(in.nextLine());
                 for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
-                    if(danhSachNhanVien.getNhanVien(index-1).getSep().equals(nv.getHoTen())){
-                        ((TruongPhong)nv).decreaseSoNhanVienDuoiQuyen();
+                    if (danhSachNhanVien.getNhanVien(index - 1).getSep().equals(nv.getHoTen())) {
+                        ((TruongPhong) nv).decreaseSoNhanVienDuoiQuyen();
                         break;
                     }
-
                 }
-                danhSachNhanVien.getDanhSach().remove(index-1);
+                danhSachNhanVien.getDanhSach().remove(index - 1);
+                count = 0;
+                System.out.println("danh sach nhan vien moi: ");
+                for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
+                    System.out.println(count + ". " + nv.getHoTen());
+                    count++;
+                }
                 break;
 
             case 2:
@@ -143,17 +175,40 @@ public class Main {
                     count++;
                 }
                 System.out.println("Nhap index cua truong phong muon xoa: ");
-                int index2= Integer.parseInt(in.nextLine());
+                int index2 = Integer.parseInt(in.nextLine());
                 for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
-                    if (nv.getSep().equals(danhSachTruongPhong.getNhanVien(index2-1)));
+                    if (nv.getSep().equals(danhSachTruongPhong.getNhanVien(index2 - 1))) ;
+                    nv.setSep(null);
                 }
-                danhSachTruongPhong.addDanhSach(new NhanVien());
-                danhSachTruongPhong.getNhanVien(danhSachTruongPhong.getDanhSach().size() - 1).inputInfo(in);
+                danhSachTruongPhong.getDanhSach().remove(index2 - 1);
+                count = 0;
+                System.out.println("Danh sach truong phong moi: ");
+                for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
+                    System.out.println(count + ". " + nv.getHoTen());
+                    count++;
+                }
                 break;
 
             case 3:
-                danhSachGiamDoc.addDanhSach(new NhanVien());
-                danhSachGiamDoc.getNhanVien(danhSachGiamDoc.getDanhSach().size() - 1).inputInfo(in);
+                count = 0;
+                System.out.println("Danh sach giam doc: ");
+                for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+                    System.out.println(count + ". " + nv.getHoTen());
+                    count++;
+                }
+                System.out.println("Nhap index cua truong phong muon xoa: ");
+                int index3 = Integer.parseInt(in.nextLine());
+                danhSachGiamDoc.getDanhSach().remove(index3 - 1);
+                count = 0;
+                for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+                    System.out.println(count + ". " + nv.getHoTen());
+                    count++;
+                }
+                System.out.println("Danh sach giam doc moi: ");
+                for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+                    System.out.println(count + ". " + nv.getHoTen());
+                    count++;
+                }
                 break;
             default:
                 System.out.println("Vui long nhap dung!");
@@ -174,4 +229,44 @@ public class Main {
             danhSachGiamDoc.getNhanVien(i).display();
         }
     }
+
+    public static void tinhVaXuatTongLuong(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
+        int sum = 0;
+        for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
+            sum += nv.getLuongMotThang();
+        }
+        for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
+            sum += nv.getLuongMotThang();
+        }
+        for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+            sum += nv.getLuongMotThang();
+        }
+        System.out.println("Tong luong toan cong ty: " + sum);
+    }
+
+    public static void nhanVienLuongCaoNhat(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
+        int max = danhSachNhanVien.getNhanVien(0).getLuongMotThang();
+        String name = "";
+        for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
+            if (max < nv.getLuongMotThang()) {
+                max = nv.getLuongMotThang();
+                name = nv.getHoTen();
+            }
+        }
+        System.out.println("Nhan vien co luong cao nhat: " + name);
+    }
+
+    public static void nhanVienDuoiQuyenMax(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc){
+        int max = ((TruongPhong)danhSachTruongPhong.getNhanVien(0)).getNhanVienDuoiQuyen();
+        String name = "";
+        for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
+            if (max < ((TruongPhong)nv).getNhanVienDuoiQuyen()) {
+                max = ((TruongPhong)nv).getNhanVienDuoiQuyen();
+                name = nv.getHoTen();
+            }
+        }
+        System.out.println("Truong phong nhan vien duoi quyen nhieu nhat: " + name);
+    }
+    
+
 }
