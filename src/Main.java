@@ -38,6 +38,15 @@ public class Main {
                 case 5:
                     xuatThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
                     break;
+                case 6:
+                    tinhVaXuatTongLuong(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+                    break;
+                case 7:
+                    nhanVienLuongCaoNhat(danhSachNhanVien);
+                    break;
+                case 8:
+                    nhanVienDuoiQuyenMax(danhSachTruongPhong);
+                    break;
                 default:
                     System.out.println("Vui long chon dung!");
             }
@@ -244,7 +253,7 @@ public class Main {
         System.out.println("Tong luong toan cong ty: " + sum);
     }
 
-    public static void nhanVienLuongCaoNhat(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
+    public static void nhanVienLuongCaoNhat(DanhSach danhSachNhanVien) {
         int max = danhSachNhanVien.getNhanVien(0).getLuongMotThang();
         String name = "";
         for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
@@ -256,7 +265,7 @@ public class Main {
         System.out.println("Nhan vien co luong cao nhat: " + name);
     }
 
-    public static void nhanVienDuoiQuyenMax(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc){
+    public static void nhanVienDuoiQuyenMax(DanhSach danhSachTruongPhong){
         int max = ((TruongPhong)danhSachTruongPhong.getNhanVien(0)).getNhanVienDuoiQuyen();
         String name = "";
         for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
@@ -267,6 +276,6 @@ public class Main {
         }
         System.out.println("Truong phong nhan vien duoi quyen nhieu nhat: " + name);
     }
-    
+
 
 }
