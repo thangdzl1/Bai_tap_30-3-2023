@@ -1,9 +1,14 @@
+import java.util.Scanner;
+
 public class GiamDoc extends TruongPhong{
     public static int luongMotNgay =300;
     private int coPhan =0, thuNhap;
 
-    public GiamDoc() {
-        this.coPhan = coPhan;
+    @Override
+    public void inputInfo(Scanner in) {
+        super.inputInfo(in);
+        System.out.println("Nhap so co phan: ");
+        coPhan = Integer.parseInt(in.nextLine());
     }
 
     @Override
@@ -27,9 +32,5 @@ public class GiamDoc extends TruongPhong{
 
     public void setThuNhap(int loiNhuanCongTy) {
         this.thuNhap =(int)(luongMotThang + (double)coPhan*loiNhuanCongTy/100);
-    }
-
-    public void setCoPhan(int coPhan) {
-        this.coPhan = coPhan;
     }
 }

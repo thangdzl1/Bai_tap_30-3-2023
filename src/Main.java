@@ -1,8 +1,4 @@
-import com.sun.org.apache.xpath.internal.objects.XString;
 
-import javax.lang.model.type.NullType;
-import javax.swing.*;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.*;
 
 public class Main {
@@ -93,13 +89,13 @@ public class Main {
         int soTruongPhong = Integer.parseInt(in.nextLine());
         for (int i = 0; i < soTruongPhong; i++) {
             danhSachTruongPhong.addDanhSach(new TruongPhong());
-            ((TruongPhong) danhSachTruongPhong.getNhanVien(i)).inputInfo(in);
+            danhSachTruongPhong.getNhanVien(i).inputInfo(in);
         }
         System.out.println("nhap so giam doc muon them: ");
         int soGiamDoc = Integer.parseInt(in.nextLine());
         for (int i = 0; i < soGiamDoc; i++) {
             danhSachGiamDoc.addDanhSach(new GiamDoc());
-            ((GiamDoc) danhSachGiamDoc.getNhanVien(i)).inputInfo(in);
+            ((GiamDoc)danhSachGiamDoc.getNhanVien(i)).inputInfo(in);
         }
     }
 
@@ -162,7 +158,7 @@ public class Main {
         System.out.println("2. Truong Phong");
         System.out.println("3. Giam Doc");
         int nhap = Integer.parseInt(in.nextLine());
-        int count = 0;
+        int count ;
         switch (nhap) {
             case 1:
                 count = 0;
@@ -198,8 +194,7 @@ public class Main {
                 System.out.println("Nhap index cua truong phong muon xoa: ");
                 int index2 = Integer.parseInt(in.nextLine());
                 for (NhanVien nv : danhSachNhanVien.getDanhSach()) {
-                    if (nv.getSep().equals(danhSachTruongPhong.getNhanVien(index2 - 1))) ;
-                    nv.setSep(null);
+                    if (nv.getSep().equals(danhSachTruongPhong.getNhanVien(index2 - 1))) nv.setSep(null);
                 }
                 danhSachTruongPhong.getDanhSach().remove(index2 - 1);
                 count = 0;
@@ -290,12 +285,7 @@ public class Main {
     }
 
     public static void sortTen(DanhSach danhSach) {
-        Collections.sort(danhSach.getDanhSach(), new Comparator<NhanVien>() {
-            @Override
-            public int compare(NhanVien o1, NhanVien o2) {
-                return o1.getHoTen().compareTo(o2.getHoTen());
-            }
-        });
+        danhSach.getDanhSach().sort((o1, o2) -> o1.getHoTen().compareTo(o2.getHoTen()));
     }
 
     public static void sapXepAlphabet(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
@@ -307,12 +297,7 @@ public class Main {
     }
 
     public static void sortLuong(DanhSach danhSach) {
-        Collections.sort(danhSach.getDanhSach(), new Comparator<NhanVien>() {
-            @Override
-            public int compare(NhanVien o1, NhanVien o2) {
-                return (int) o2.getLuongMotThang() - o1.getLuongMotThang();
-            }
-        });
+        danhSach.getDanhSach().sort((o1, o2) -> o2.getLuongMotThang() - o1.getLuongMotThang());
     }
 
     public static void sapXepTheoLuong(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {

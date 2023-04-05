@@ -38,16 +38,8 @@ public class NhanVien extends Person {
         this.luongMotThang = luongMotNgay * soNgayLamViec;
     }
 
-    public String getMaSo() {
-        return maSo;
-    }
-
     public String getHoTen() {
         return hoTen;
-    }
-
-    public int getSoNgayLamViec() {
-        return soNgayLamViec;
     }
 
     public void setSoNgayLamViec(int soNgayLamViec) {
@@ -56,10 +48,6 @@ public class NhanVien extends Person {
 
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
-    }
-
-    public String getSoDienThoai() {
-        return soDienThoai;
     }
 
     public void setSoDienThoai(String soDienThoai) {

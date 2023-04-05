@@ -1,11 +1,7 @@
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TruongPhong extends NhanVien {
     protected int soNhanVienDuoiQuyen = 0;
     protected static int luongMotNgay = 200;
-    private ArrayList<NhanVien> danhSach;
-
     @Override
     public void display() {
         super.display();
@@ -23,14 +19,6 @@ public class TruongPhong extends NhanVien {
     public void decreaseSoNhanVienDuoiQuyen(){
         soNhanVienDuoiQuyen--;
     }
-    public ArrayList<NhanVien> getDanhSach() {
-        return danhSach;
-    }
-
-    public void setDanhSach(ArrayList<NhanVien> danhSach) {
-        this.danhSach = danhSach;
-    }
-
     public int getNhanVienDuoiQuyen() {
         return this.soNhanVienDuoiQuyen;
     }

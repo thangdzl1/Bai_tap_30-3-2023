@@ -1,13 +1,9 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class DanhSach{
     private ArrayList<NhanVien> danhSach;
     public DanhSach(){
         danhSach = new ArrayList<>();
-    }
-    public DanhSach(ArrayList danhSach){
-        this.danhSach = danhSach;
     }
     public void addDanhSach(NhanVien nv){
         danhSach.add(nv);
