@@ -2,8 +2,8 @@ import com.sun.org.apache.xpath.internal.objects.XString;
 
 import javax.lang.model.type.NullType;
 import javax.swing.*;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.lang.management.GarbageCollectorMXBean;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,6 +47,18 @@ public class Main {
                 case 8:
                     nhanVienDuoiQuyenMax(danhSachTruongPhong);
                     break;
+                case 9:
+                    sapXepAlphabet(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+                    break;
+                case 10:
+                    sapXepTheoLuong(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+                    break;
+                case 11:
+                    giamDocCoPhanCaoNhat(danhSachGiamDoc);
+                    break;
+                case 12:
+                    thuNhapTungGiamDoc(danhSachGiamDoc, in);
+                    break;
                 default:
                     System.out.println("Vui long chon dung!");
             }
@@ -81,13 +93,13 @@ public class Main {
         int soTruongPhong = Integer.parseInt(in.nextLine());
         for (int i = 0; i < soTruongPhong; i++) {
             danhSachTruongPhong.addDanhSach(new TruongPhong());
-            danhSachTruongPhong.getNhanVien(i).inputInfo(in);
+            ((TruongPhong) danhSachTruongPhong.getNhanVien(i)).inputInfo(in);
         }
         System.out.println("nhap so giam doc muon them: ");
         int soGiamDoc = Integer.parseInt(in.nextLine());
         for (int i = 0; i < soGiamDoc; i++) {
             danhSachGiamDoc.addDanhSach(new GiamDoc());
-            danhSachGiamDoc.getNhanVien(i).inputInfo(in);
+            ((GiamDoc) danhSachGiamDoc.getNhanVien(i)).inputInfo(in);
         }
     }
 
@@ -231,11 +243,11 @@ public class Main {
         }
         System.out.println("Danh sach truong phong: ");
         for (int i = 0; i < danhSachTruongPhong.getDanhSach().size(); i++) {
-            danhSachTruongPhong.getNhanVien(i).display();
+            ((TruongPhong) danhSachTruongPhong.getNhanVien(i)).display();
         }
         System.out.println("Danh sach giam doc: ");
         for (int i = 0; i < danhSachGiamDoc.getDanhSach().size(); i++) {
-            danhSachGiamDoc.getNhanVien(i).display();
+            ((GiamDoc) danhSachGiamDoc.getNhanVien(i)).display();
         }
     }
 
@@ -265,17 +277,73 @@ public class Main {
         System.out.println("Nhan vien co luong cao nhat: " + name);
     }
 
-    public static void nhanVienDuoiQuyenMax(DanhSach danhSachTruongPhong){
-        int max = ((TruongPhong)danhSachTruongPhong.getNhanVien(0)).getNhanVienDuoiQuyen();
+    public static void nhanVienDuoiQuyenMax(DanhSach danhSachTruongPhong) {
+        int max = ((TruongPhong) danhSachTruongPhong.getNhanVien(0)).getNhanVienDuoiQuyen();
         String name = "";
         for (NhanVien nv : danhSachTruongPhong.getDanhSach()) {
-            if (max < ((TruongPhong)nv).getNhanVienDuoiQuyen()) {
-                max = ((TruongPhong)nv).getNhanVienDuoiQuyen();
+            if (max < ((TruongPhong) nv).getNhanVienDuoiQuyen()) {
+                max = ((TruongPhong) nv).getNhanVienDuoiQuyen();
                 name = nv.getHoTen();
             }
         }
         System.out.println("Truong phong nhan vien duoi quyen nhieu nhat: " + name);
     }
 
+    public static void sortTen(DanhSach danhSach) {
+        Collections.sort(danhSach.getDanhSach(), new Comparator<NhanVien>() {
+            @Override
+            public int compare(NhanVien o1, NhanVien o2) {
+                return o1.getHoTen().compareTo(o2.getHoTen());
+            }
+        });
+    }
 
+    public static void sapXepAlphabet(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
+        sortTen(danhSachNhanVien);
+        sortTen(danhSachTruongPhong);
+        sortTen(danhSachGiamDoc);
+        System.out.println("Sap xep danh sach thanh cong!");
+        xuatThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+    }
+
+    public static void sortLuong(DanhSach danhSach) {
+        Collections.sort(danhSach.getDanhSach(), new Comparator<NhanVien>() {
+            @Override
+            public int compare(NhanVien o1, NhanVien o2) {
+                return (int) o2.getLuongMotThang() - o1.getLuongMotThang();
+            }
+        });
+    }
+
+    public static void sapXepTheoLuong(DanhSach danhSachNhanVien, DanhSach danhSachTruongPhong, DanhSach danhSachGiamDoc) {
+        sortLuong(danhSachNhanVien);
+        sortLuong(danhSachTruongPhong);
+        sortLuong(danhSachGiamDoc);
+        System.out.println("Sap xep danh sach thanh cong!");
+        xuatThongTin(danhSachNhanVien, danhSachTruongPhong, danhSachGiamDoc);
+    }
+
+    public static void giamDocCoPhanCaoNhat(DanhSach danhSachGiamDoc) {
+        int max = -1;
+        int index = -1;
+        for (int i = 0; i < danhSachGiamDoc.getDanhSach().size(); i++) {
+            if (((GiamDoc) danhSachGiamDoc.getNhanVien(i)).getCoPhan() > max) {
+                max = (((GiamDoc) danhSachGiamDoc.getNhanVien(i)).getCoPhan());
+                index = i;
+            }
+        }
+        System.out.println("Giam doc co so luong co phan nhieu nhat: ");
+        ((GiamDoc) danhSachGiamDoc.getNhanVien(index)).display();
+    }
+
+    public static void thuNhapTungGiamDoc(DanhSach danhSachGiamDoc, Scanner in) {
+        System.out.println("Nhap tong thu nhap cua cong ty");
+        int sum = Integer.parseInt(in.nextLine());
+        for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+            ((GiamDoc) nv).setThuNhap(sum);
+        }
+        for (NhanVien nv : danhSachGiamDoc.getDanhSach()) {
+            System.out.println("Thu nhap cua giam doc " + nv.getHoTen() + "la: " + ((GiamDoc) nv).getThuNhap());
+        }
+    }
 }
